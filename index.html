@@ -1,3 +1,41 @@
-<script type="text/javascript" src="js/instafeed.min.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
-<div id="instafeed"></div>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Cafe Fronts</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+
+        <script type="text/javascript" src="js/instafeed.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <style>
+		    body {
+		    	padding: 0;
+		    	margin: 0;
+		    }
+            html, body{
+                height: 100%;
+            }
+            #map {
+		    	height: 300px;
+		    }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+    	<script>
+            // Provide your access token
+            L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
+            // Create a map in the div #map
+            var map = L.mapbox.map('map', 'pamo.hlc07n47')
+                .setView([51.505, -0.09], 13);
+            var photoLayer = L.mapbox.featureLayer();
+            feed.run();
+            photoLayer.addTo(map);
+        </script>
+        <div id="instafeed"></div>
+
+    </body>
+</html>
