@@ -14,7 +14,7 @@
     <body>
         <div id="map"></div>
         <div class="aside">
-            <h3>Cafe Fronts: <a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html" target="_blank">A pet photo project</a></h3>
+            <h3>Cafe Fronts: <br /><a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html" target="_blank">A pet photo project</a></h3>
             <ul id="instafeed"></ul>
         </div>
         <script>
@@ -26,7 +26,7 @@
                 currentId = '';
 
             sideBar.onclick = function(e){
-                currentId = e.srcElement.id;
+                currentId = e.target.id;
                 map.eachLayer(function(marker){
                     if(marker.feature && marker.feature.properties.id == currentId){
                         map.panTo(marker.getLatLng());
