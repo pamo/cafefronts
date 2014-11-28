@@ -9,6 +9,7 @@ var feed = new Instafeed({
     userId: 30792403,
     accessToken: '30792403.467ede5.f5d03294259546698b7d513af731a00b',
     useHttp: true,
+    template: "<li id={{model.location.id}}>{{model.location.name}}</li>",
     filter: function(image) {
         if(image.tags.indexOf('cafefront') >= 0){
             geoJson.push({
@@ -19,6 +20,7 @@ var feed = new Instafeed({
                 },
                 "properties": {
                     "title": image.location.name,
+                    "id": image.location.id,
                     "image": image.images.standard_resolution.url,
                     "url": image.link,
                     "description": formatDescription(image.caption.text),
@@ -27,11 +29,12 @@ var feed = new Instafeed({
                             "marker-symbol": "cafe"
                 }
             });
+            return image;
         }
     },
     after: function(){
+        var paginatedLayer = L.mapbox.featureLayer().addTo(map);
         if (this.hasNext()) {
-            var paginatedLayer = L.mapbox.featureLayer();
             paginatedLayer.on('layeradd', function(e) {
                 var marker = e.layer,
                 feature = marker.feature;
@@ -45,9 +48,8 @@ var feed = new Instafeed({
                     minWidth: 320
                 });
             });
-            paginatedLayer.setGeoJSON(geoJson);
+            paginatedLayer.setGeoJSON({type:'FeatureCollection', features: geoJson});
             geoJson = [];
-            paginatedLayer.addTo(map);
             feed.next();
         }
     }

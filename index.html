@@ -6,30 +6,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+        <link href='css/style.css' rel='stylesheet' />
 
         <script type="text/javascript" src="js/instafeed.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-
-        <style>
-		    body {
-		    	padding: 0;
-		    	margin: 0;
-		    }
-            html, body{
-                height: 100%;
-            }
-            #map {
-		    	height: 100%;
-		    }
-        </style>
     </head>
     <body>
         <div id="map"></div>
+        <div class="aside">
+            <h3>Cafe Fronts: <a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html" target="_blank">A pet photo project</a></h3>
+            <ul id="instafeed"></ul>
+        </div>
         <script>
             L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
             var map = L.mapbox.map('map', 'pamo.hlc07n47')
-                    .setView([37.7577,-122.4376], 13);
+                .setView([37.7577,-122.4376], 13);
+            map.zoomControl.setPosition('topright');
+            var sideBar = document.getElementById('instafeed'),
+                currentId = '';
+
+            sideBar.onclick = function(e){
+                currentId = e.srcElement.id;
+                map.eachLayer(function(marker){
+                    if(marker.feature && marker.feature.properties.id == currentId){
+                        map.panTo(marker.getLatLng());
+                        marker.openPopup();
+                    }
+                });
+            };
+
         </script>
-        <div id="instafeed"></div>
     </body>
 </html>
