@@ -1,14 +1,16 @@
 var geoJson = [];
+var formatDescription = function(caption){
+    caption = caption.split(' ').slice(2).join(' ');
+    return caption.split('.').join('.<br \>\n');
+};
+
 var feed = new Instafeed({
     get: 'user',
     userId: 30792403,
     accessToken: '30792403.467ede5.f5d03294259546698b7d513af731a00b',
     useHttp: true,
-    template: '<a href="{{link}}" target="_blank"><img src="{{image}}"></a><p>{{image.caption.text.toString()}}</p>',
     filter: function(image) {
         if(image.tags.indexOf('cafefront') >= 0){
-            var short_description = image.caption.text.split(' ').slice(2).join(' ');
-
             geoJson.push({
                 "type": "Feature",
                 "geometry": {
@@ -17,12 +19,12 @@ var feed = new Instafeed({
                 },
                 "properties": {
                     "title": image.location.name,
-                    "image": image.images.low_resolution.url,
+                    "image": image.images.standard_resolution.url,
                     "url": image.link,
-                    "description": short_description,
-                    "marker-color": "#548cba",
-                    "marker-size": "large",
-                    "marker-symbol": "cafe"
+                    "description": formatDescription(image.caption.text),
+                        "marker-color": "#548cba",
+                        "marker-size": "large",
+                            "marker-symbol": "cafe"
                 }
             });
         }
@@ -34,10 +36,10 @@ var feed = new Instafeed({
                 var marker = e.layer,
                 feature = marker.feature;
 
-                var popupContent =  '<h3>' + feature.properties.title + '</h3>' +
-                    '<a target="_blank" class="popup" href="' + feature.properties.url + '">' +
-                    '<img src="' + feature.properties.image + '" />' +
-                    feature.properties.description + '</a>';
+                var popupContent = '<a target="_blank" class="popup" href="' + feature.properties.url + '">' +
+                    '<h3>' + feature.properties.title + '</h3>' +
+                    '<img src="' + feature.properties.image + '" width="306" height="306" /></a>' +
+                    feature.properties.description;
 
                 marker.bindPopup(popupContent, {
                     minWidth: 320
@@ -50,4 +52,5 @@ var feed = new Instafeed({
         }
     }
 });
+
 feed.run();
