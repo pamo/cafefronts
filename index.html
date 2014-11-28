@@ -19,23 +19,17 @@
                 height: 100%;
             }
             #map {
-		    	height: 300px;
+		    	height: 100%;
 		    }
         </style>
     </head>
     <body>
         <div id="map"></div>
-    	<script>
-            // Provide your access token
+        <script>
             L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
-            // Create a map in the div #map
             var map = L.mapbox.map('map', 'pamo.hlc07n47')
-                .setView([51.505, -0.09], 13);
-            var photoLayer = L.mapbox.featureLayer();
-            feed.run();
-            photoLayer.addTo(map);
+                    .setView([37.08, -96], 4);
         </script>
         <div id="instafeed"></div>
-
     </body>
 </html>
