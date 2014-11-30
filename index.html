@@ -14,14 +14,18 @@
     <body>
         <div id="map"></div>
         <div class="aside">
-            <h3>Cafe Fronts: <br /><a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html" target="_blank">A pet photo project</a></h3>
             <ul id="instafeed"></ul>
         </div>
         <script>
             L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
-            var map = L.mapbox.map('map', 'pamo.hlc07n47')
+            var map = L.mapbox.map('map', 'pamo.hlc07n47', {attributionControl: false})
                 .setView([37.7577,-122.4376], 13);
             map.zoomControl.setPosition('topright');
+            var aboutAttribution = L.control.attribution({prefix: ''})
+                .addAttribution('<a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html"' +
+                        ' target="_blank"><strong>Cafe Fronts</strong>, a pet photo project</a>')
+                .addTo(map);
+
             var sideBar = document.getElementById('instafeed'),
                 currentId = '';
 
