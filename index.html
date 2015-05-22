@@ -4,41 +4,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cafe Fronts</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
         <link href='css/style.css' rel='stylesheet' />
 
-        <script type="text/javascript" src="js/instafeed.min.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript"src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="js/loadMap.js"></script>
     </head>
     <body>
         <div id="map"></div>
-        <div class="aside">
-            <ul id="instafeed"></ul>
-        </div>
-        <script>
-            L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
-            var map = L.mapbox.map('map', 'pamo.hlc07n47', {attributionControl: false})
-                .setView([37.7577,-122.4376], 13);
-            map.zoomControl.setPosition('topright');
-            var aboutAttribution = L.control.attribution({prefix: ''})
-                .addAttribution('<a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html"' +
-                        ' target="_blank"><strong>Cafe Fronts</strong>, a pet photo project</a>')
-                .addTo(map);
-
-            var sideBar = document.getElementById('instafeed'),
-                currentId = '';
-
-            sideBar.onclick = function(e){
-                currentId = e.target.id;
-                map.eachLayer(function(marker){
-                    if(marker.feature && marker.feature.properties.id == currentId){
-                        map.panTo(marker.getLatLng());
-                        marker.openPopup();
-                    }
-                });
-            };
-
-        </script>
+        <div id="nav"></div>
     </body>
 </html>
