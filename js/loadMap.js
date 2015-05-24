@@ -35,7 +35,7 @@ $.get('http://insta-pamo.herokuapp.com/tagged/cafefront', function(data){
 $(function(){
     sideBar  = document.getElementById('nav');
     L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
-    map = L.mapbox.map('map', 'pamo.hlc07n47', {attributionControl: false}).setView([37.7577,-122.4376], 13);
+    map = L.mapbox.map('map', 'pamo.hlc07n47', {attributionControl: false}).setView([37.7577,-122.4376], 10);
     map.zoomControl.setPosition('topright');
 
     aboutAttribution = L.control.attribution({prefix: ''})
