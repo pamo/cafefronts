@@ -20,6 +20,22 @@ function createFeature(image){
     } 
 }
 
+function bindCustomPopup(e){
+    var photoDimension = '306';
+    var marker = e.layer,
+    feature = marker.feature;
+
+    var popupContent = '<a target="_blank" class="popup" href="' + feature.properties.url + '">' +
+        '<h3>' + feature.properties.title + '</h3>' +
+        '<img src="' + feature.properties.image.url + '" width="' + photoDimension + '" height="' + photoDimension + '" /></a>' +
+        feature.properties.description;
+
+    marker.bindPopup(popupContent, {
+        minWidth: photoDimension
+    });
+}
+
+
 $.get('http://insta-pamo.herokuapp.com/tagged/cafefront', function(data){
     var featureLayer = L.mapbox.featureLayer().addTo(map);
     var geoJson = [];
@@ -29,6 +45,7 @@ $.get('http://insta-pamo.herokuapp.com/tagged/cafefront', function(data){
         geoJson.push(createFeature(photo));
     });
 
+    featureLayer.on('layeradd', bindCustomPopup);
     featureLayer.setGeoJSON({type: 'FeatureCollection', features: geoJson});
 });
 
@@ -51,7 +68,4 @@ $(function(){
                         }
                     });
                 };
-
-
-    console.log('ready to go!');
 });
