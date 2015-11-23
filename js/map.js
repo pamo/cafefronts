@@ -17,7 +17,7 @@ function createFeature(image){
             "marker-color": "#548cba",
             "marker-symbol": "cafe"
         }
-    } 
+    }
 }
 
 function bindCustomPopup(e){
@@ -35,37 +35,39 @@ function bindCustomPopup(e){
     });
 }
 
-
-$.get('http://insta-pamo.herokuapp.com/', function(data){
+function fetchAndAddMarkers() {
+  $.get('http://insta-pamo.herokuapp.com/', function(data){
     var featureLayer = L.mapbox.featureLayer().addTo(map);
     var geoJson = [];
 
+    sideBarList  = $('.navigation-list');
     data.forEach(function(photo){
-        console.log(photo);
-        geoJson.push(createFeature(photo));
+      sideBarList.append('<li class="navigation-list-item">' + photo.title + '</li>');
+      geoJson.push(createFeature(photo));
     });
-
     featureLayer.on('layeradd', bindCustomPopup);
     featureLayer.setGeoJSON({type: 'FeatureCollection', features: geoJson});
-});
+  });
+}
 
 $(function(){
-    sideBar  = document.getElementById('nav');
-    L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
-    map = L.mapbox.map('map', 'pamo.hlc07n47', {attributionControl: false}).setView([37.7577,-122.4376], 10);
-    map.zoomControl.setPosition('topright');
+  L.mapbox.accessToken = 'pk.eyJ1IjoicGFtbyIsImEiOiJxV2RMRDJzIn0.qLQR4fGJEXfiHeY2eZ5R-g';
+  map = L.mapbox.map('map', 'pamo.hlc07n47', {attributionControl: false}).setView([37.7577,-122.4376], 10);
+  map.zoomControl.setPosition('topright');
 
-    aboutAttribution = L.control.attribution({prefix: ''})
-                .addAttribution('<a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html"' +
-                        ' target="_blank"><strong>Cafe Fronts</strong>, a pet photo project</a>')
-                .addTo(map);
-                sideBar.onclick = function(e){
-                    currentId = e.target.id;
-                    map.eachLayer(function(marker){
-                        if(marker.feature && marker.feature.properties.id == currentId){
-                            map.panTo(marker.getLatLng());
-                            marker.openPopup();
-                        }
-                    });
-                };
+  sideBar  = $('.navigation');
+  aboutAttribution = L.control.attribution({prefix: ''})
+  .addAttribution('<a href="http://pamo.github.io/words/2014/10/12/cafe-fronts.html"' +
+  ' target="_blank"><strong>Cafe Fronts</strong>, a pet photo project</a>')
+  .addTo(map);
+  sideBar.click(function(e){
+    clickedItem = e.target.innerText;
+    map.eachLayer(function(marker){
+      if(marker.feature && marker.feature.properties.title == clickedItem){
+        map.panTo(marker.getLatLng());
+        marker.openPopup();
+      }
+    });
+  });
+  fetchAndAddMarkers();
 });
