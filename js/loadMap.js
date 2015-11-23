@@ -36,11 +36,11 @@ function bindCustomPopup(e){
 }
 
 
-$.get('http://insta-pamo.herokuapp.com/tagged/cafefront', function(data){
+$.get('http://insta-pamo.herokuapp.com/', function(data){
     var featureLayer = L.mapbox.featureLayer().addTo(map);
     var geoJson = [];
 
-    data.photos.forEach(function(photo){
+    data.forEach(function(photo){
         console.log(photo);
         geoJson.push(createFeature(photo));
     });
