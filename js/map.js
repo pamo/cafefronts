@@ -36,7 +36,7 @@ function bindCustomPopup(e){
 }
 
 function fetchAndAddMarkers() {
-  $.get('http://insta-pamo.herokuapp.com/', function(data){
+  $.get('http://insta-pamo.herokuapp.com/tag/cafefront', function(data){
     var featureLayer = L.mapbox.featureLayer().addTo(map);
     var geoJson = [];
 
